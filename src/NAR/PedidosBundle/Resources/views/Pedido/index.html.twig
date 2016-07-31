@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+    {% block body %}
+    
+    {{ form_start(form) }}
+    
+            Recogida:<br>
+        <select id="diaSelect" name="diaSelect" required>
+          <option value="none" disabled selected></option>
+          <option value="cinco">5 de Enero</option>
+          <option value="seis">6 de Enero</option>
+        </select>
+        <br>
+        <br>
+        <div id="horasText" name="horasText">Hora de recogida</div> <br>
+        <select id="horaSelect" name="horaText" required></select>
+        <br>
+        <br>
+    
+    {{ form_end(form)}}
+
+    {% endblock %}
+
+{% block javascripts %}
+
+<script type="text/javascript">
+
+    $( document ).ready(function() {
+        $('#horaSelect').hide();
+        $('#horasText').hide();
+    });
+
+    function calcular(){
+        $valRoscon1 = $("#pedido_roscon1").val();
+        $valRoscon2 = $("#pedido_roscon2").val();
+        
+        if($("#pedido_roscon1").val() == ""){
+            $valRoscon1 = 0;
+        }
+        
+        if($("#pedido_roscon2").val() == ""){
+            $valRoscon2 = 0;
+        }
+        
+        $valRoscon1 = $valRoscon1 * 5;
+        $valRoscon2 = $valRoscon2 * 7;
+        
+        $('#pedido_importe').val($valRoscon1 + $valRoscon2);
+    }
+
+
+    $("#pedido_roscon1").change(function() {
+      calcular();
+    });
+    
+    $("#pedido_roscon2").change(function() {
+      calcular();
+    });
+    
+    function horas(start, end){
+        var timeArray = [];
+        timeArray.push(start + ":" + "00");
+        while(start < end){
+            timeArray.push(start + ":" + "15");
+            timeArray.push(start + ":" + "30");
+            timeArray.push(start + ":" + "45");
+            start++;
+            timeArray.push(start + ":" + "00");
+        }
+        
+        return timeArray;
+    }
+    
+    $('#diaSelect').change(function() {
+        
+        var horasArray; 
+        if($(this).val() == "cinco"){
+           horasArray = horas(9, 21);
+        }
+        
+        if($(this).val() == "seis"){
+           horasArray = horas(9, 12);
+        }
+        
+        $('#horaSelect').find('option').remove();
+        for(var i = 0; i < horasArray.length ; i++){
+             $('#horaSelect').append('<option value="' + horasArray[i] + '">' + horasArray[i] + '</option>');
+        }
+               
+        $('#horaSelect').show();
+        $('#horasText').show();
+        
+        
+    });
+    
+    
+
+
+</script>
+
+
+{% endblock %}

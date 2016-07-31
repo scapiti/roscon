@@ -1,3 +1,7 @@
+nar_pedidos:
+    resource: "@NARPedidosBundle/Resources/config/routing.yml"
+    prefix:   /
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation

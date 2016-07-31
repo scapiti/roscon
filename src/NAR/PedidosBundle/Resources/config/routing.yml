@@ -1,0 +1,11 @@
+nar_pedidos_index:
+    path:       /pedidos/nuevo
+    defaults: { _controller: NARPedidosBundle:Pedidos:index }
+nar_pedidos_paypal:
+    path:       /pedidos/paypal
+    defaults: { _controller: NARPedidosBundle:Pedidos:paypal }
+nar_pedidos_pedir:
+    path:       /pedidos/pedir
+    defaults:   { _controller: NARPedidosBundle:Pedidos:pedir }
+    methods: POST
+    
